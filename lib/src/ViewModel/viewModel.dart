@@ -14,14 +14,19 @@ class ViewModel with ChangeNotifier {
   // MarvelModel? marvelModel ;
 
   //  The final privateKey in this case should is in other file, probably with a crypto method. However in this case is fine here.
-  final privateKey = 'dcca949708ec8a3a3b97cf51cacf65cd98a314c4';
+  final privateKey = 'aea39f754aa53c3207e7455a033367ae10045c8d';
 
-  final publicKey = 'fea4ddbf370376865724c2b03db5ffef';
+  final publicKey = '5c28ff77e7908458a8255f977f3c9a95';
   final apiUrl = 'http://gateway.marvel.com/v1/public/characters';
   String timeStamp = DateTime.now().millisecondsSinceEpoch.toString();
 
   // This is a message for 'no response'
   final noResponse = "Please check your network connection";
+
+
+
+  // late var dataMarvelProvider = DataMarvelProvider().dataMarvelProvider;
+
   
   //   This is the method that return the hash
   String md5hash(){
@@ -48,7 +53,29 @@ class ViewModel with ChangeNotifier {
     }
   }
   
+
+  // MarvelModel? _dataMarvelProvider ;
+
+  // MarvelModel? get dataMarvelProvider => _dataMarvelProvider;
+
+  // set dataMarvelProvider(MarvelModel? model) {
+  //   _dataMarvelProvider = model;
+  // }
   
 
 }
 
+
+class DataMarvelProvider extends ChangeNotifier {
+
+  final model = ViewModel().getResponse();
+
+MarvelModel? _dataMarvelProvider ;
+
+  MarvelModel? get dataMarvelProvider => _dataMarvelProvider;
+
+  set dataMarvelProvider(MarvelModel? model) {
+    _dataMarvelProvider = model;
+  }
+
+}

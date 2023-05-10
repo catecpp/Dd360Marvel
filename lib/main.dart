@@ -1,30 +1,31 @@
+import 'package:dd360_test/src/View/listSuperHerosMarvelPage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'src/Model/model.dart';
+import 'src/View/noResponseView.dart';
 import 'src/ViewModel/viewModel.dart';
 
-void main() {
-  runApp(const MainApp());
+void main() async {
+  final MarvelModel? marvelModel = await ViewModel().getResponse();
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => DataMarvelProvider())
+  ],
+  child: MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: Preload(model: marvelModel)),
+  ));
 }
 
-class MainApp extends StatelessWidget  {
-  const MainApp({super.key});
-  
-
+class Preload extends StatelessWidget  {
+  final MarvelModel? model;
+  const Preload({super.key, required this.model}); 
   @override
   Widget build(BuildContext context) {
-    final viewModel = ViewModel();
-
-
-   final  name = viewModel.getResponse();
-   print(name);
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text("name"),
-        ),
-      ),
-    );
+    final marvelProvider = Provider.of<DataMarvelProvider>(context); 
+    marvelProvider.dataMarvelProvider = model;  
+    return marvelProvider.dataMarvelProvider == null ?
+     const NoResponseView() :
+     const ListSuperHeroMarvelPage();
   }
 }

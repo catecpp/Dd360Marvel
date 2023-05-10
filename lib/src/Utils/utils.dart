@@ -42,7 +42,9 @@ Widget styleFont(BuildContext context, String title, int hierarchy) {
                               ? TextAlign.left
                               : hierarchy == 7
                                   ? TextAlign.left
-                                  : TextAlign.left,
+                                : hierarchy == 8
+                                    ? TextAlign.left
+                                    : TextAlign.left,
       style: TextStyle(
         fontStyle: hierarchy == 1
             ? FontStyle.normal

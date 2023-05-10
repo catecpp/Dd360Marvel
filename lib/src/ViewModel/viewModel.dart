@@ -18,6 +18,7 @@ class ViewModel with ChangeNotifier {
 
   final publicKey = '5c28ff77e7908458a8255f977f3c9a95';
   final apiUrl = 'http://gateway.marvel.com/v1/public/characters';
+  final apiUrlImage = 'http://gateway.marvel.com/v1/public/Image';
   String timeStamp = DateTime.now().millisecondsSinceEpoch.toString();
 
   // This is a message for 'no response'
@@ -41,6 +42,23 @@ class ViewModel with ChangeNotifier {
     final hash = md5hash();
     final queryParams = 'ts=$timeStamp&apikey=$publicKey&hash=$hash';
     final url = '$apiUrl?$queryParams';
+
+    final Uri urlConsult = Uri.parse(url);
+    final http.Response resp = await http.get(urlConsult);
+
+    if (resp.statusCode == 200){
+      final MarvelModel data = MarvelModel.fromJson(json.decode(resp.body));
+      return data;
+    }else {
+      return null;
+    }
+  }
+
+  
+  Future<MarvelModel?> getResponseImage() async {
+    final hash = md5hash();
+    final queryParams = 'ts=$timeStamp&apikey=$publicKey&hash=$hash';
+    final url = '$apiUrlImage?$queryParams';
 
     final Uri urlConsult = Uri.parse(url);
     final http.Response resp = await http.get(urlConsult);

@@ -1,7 +1,5 @@
-import 'dart:convert';
 import 'dart:io';
 
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 import '../../Model/model.dart';
@@ -10,37 +8,40 @@ import '../../ViewModel/viewModel.dart';
 import 'detailsSuperHero.dart';
 
 class Sliver extends StatelessWidget {
-    final String? idImage;
-    final String name;
-    final List<ComicsItem> comics;
-    final List<ComicsItem> events;
-    final String descript;
-    final List<ComicsItem> series;
-    final List<StoriesItem>stories;
-    final int typ;
+  final String? idImage;
+  final String name;
+  final List<ComicsItem> comics;
+  final List<ComicsItem> events;
+  final String descript;
+  final List<ComicsItem> series;
+  final List<StoriesItem> stories;
+  final int typ;
+  final List listRmdonColor;
   const Sliver({
-    super.key, 
+    super.key,
     this.idImage,
-    required this.name, 
+    required this.name,
     required this.comics,
-     required this.events, 
-    required this.descript, 
-    required this.series, 
-    required this.typ, required this.stories
-    });
+    required this.events,
+    required this.descript,
+    required this.series,
+    required this.typ,
+    required this.stories,
+    required this.listRmdonColor,
+  });
 
   @override
   Widget build(BuildContext context) {
-  final TitleProvider titleFront = TitleProvider();
+    final TitleProvider titleFront = TitleProvider();
+
     return GestureDetector(
       onTap: () {
-        print(comics);
         showDialog(
             context: context,
             builder: (context) {
               return
-              //  Container();
-              DetailOfTitle(
+                  //  Container();
+                  DetailOfTitle(
                 idImage: idImage,
                 title: name,
                 descript: descript,
@@ -66,7 +67,7 @@ class Sliver extends StatelessWidget {
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                      color: Color.fromARGB(164, 0, 0, 0),
+                      color: const Color.fromARGB(164, 0, 0, 0),
                       blurRadius: 11,
                       offset: Offset.fromDirection(2.25, (4.7)))
                 ],
@@ -75,7 +76,7 @@ class Sliver extends StatelessWidget {
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                        color: Color.fromARGB(96, 72, 12, 163),
+                        color: const Color.fromARGB(96, 72, 12, 163),
                         blurRadius: 11,
                         offset: Offset.fromDirection(2.25, (4)))
                   ],
@@ -87,42 +88,42 @@ class Sliver extends StatelessWidget {
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                            color: Color.fromARGB(164, 0, 0, 0),
+                            color: const Color.fromARGB(164, 0, 0, 0),
                             blurRadius: 11,
                             offset: Offset.fromDirection(2.25, (4)))
                       ],
-                      gradient: idImage?[0] == '1'
+                      gradient: listRmdonColor[0] == 0
                           ? const LinearGradient(
                               colors: [
                                 Color.fromARGB(255, 238, 162, 0),
-                                Color.fromARGB(255, 238, 208, 161),
+                                Color.fromARGB(255, 48, 29, 0),
                               ],
                               begin: Alignment.topLeft,
                               end: Alignment(0.65, 1.5),
                               stops: [0.47, 1.5])
-                          : idImage?[0] == '2'
+                          : listRmdonColor[0] == 1
                               ? const LinearGradient(
                                   colors: [
                                     Color.fromARGB(255, 239, 0, 0),
-                                    Color.fromARGB(255, 255, 176, 204),
+                                    Color.fromARGB(255, 43, 0, 15),
                                   ],
                                   begin: Alignment.topLeft,
                                   end: Alignment(0.65, 1.5),
                                   stops: [0.47, 1.1])
-                              : idImage?[0] == '3'
+                              : ramdomNumber(5) == 2
                                   ? const LinearGradient(
                                       colors: [
-                                        Color.fromARGB(255, 80, 218, 0),
-                                        Color.fromARGB(255, 174, 234, 177),
+                                        Color.fromARGB(255, 10, 204, 0),
+                                        Color.fromARGB(255, 0, 39, 2),
                                       ],
                                       begin: Alignment.topLeft,
                                       end: Alignment(0.65, 1.5),
-                                      stops: [0.47, 1.5])     
-                                  : idImage?[0] == '9'
+                                      stops: [0.47, 1.5])
+                                  : ramdomNumber(5) == 3
                                       ? const LinearGradient(
                                           colors: [
-                                            Color.fromARGB(255, 193, 0, 218),
-                                            Color.fromARGB(255, 220, 168, 243),
+                                            Color.fromARGB(255, 255, 3, 142),
+                                            Color.fromARGB(255, 19, 0, 27),
                                           ],
                                           begin: Alignment.topLeft,
                                           end: Alignment(0.65, 1.5),
@@ -148,41 +149,39 @@ class Sliver extends StatelessWidget {
                               children: [
                                 space(context, 0.008),
                                 ClipRRect(
-                                  borderRadius:
-                                      BorderRadius.circular(typ == 1 ? 6.0 : 4.5),
+                                  borderRadius: BorderRadius.circular(typ == 1 ? 6.0 : 4.5),
                                   child: SizedBox(
                                     width: screenSize(
                                         context, 'height', typ == 1 ? 0.104 : 0.056),
-                                    child: FadeInImage(
-                                      placeholderErrorBuilder:
-                                          (context, error, stackTrace) {
-                                        if ((error == HttpException) ||
-                                            (error == IOException) || 
-                                            stackTrace == StackTrace.empty) {
+                                    child: Hero(
+                                      tag: idImage!,
+                                      child: FadeInImage(
+                                        placeholderErrorBuilder:
+                                            (context, error, stackTrace) {
+                                          if ((error == HttpException) ||
+                                              (error == IOException) ||
+                                              stackTrace == StackTrace.empty) {
+                                            return Container();
+                                          }
                                           return Container();
-                                        }
-                                        return Container();
-                                      },
-                                      fadeInCurve: Curves.easeOutQuint,
-                                      fadeInDuration: Duration(milliseconds: 600),
-                                      fadeOutCurve: Curves.easeInQuint,
-                                      fadeOutDuration: Duration(milliseconds: 600),
-                                      imageErrorBuilder: ((context, error, stackTrace) {
-                                        // if ((error == HttpException) ||
-                                        //     (error == IOException) || 
-                                        //     stackTrace == StackTrace.empty) {
-                                        //   return Container();
-                                        // }
-                                        print(error);
-                                        return Image.asset('assets/NotImagestandard_large.jpg');
-                                      }),
-                                      placeholder: const AssetImage('assets/NotImagestandard_large.jpg'),
-                                      image:  NetworkImage(idImage!.endsWith("not_available") ?
-                                         '$idImage' + '/portrait_xlarge.jpg':
-                                         '$idImage' + '/portrait_fantastic.jpg',
-                                         ) ,
-                                          // 'https://covers.openlibrary.org/b/id/$idImage-L.jpg'),
-                                      fit: typ == 1 ? BoxFit.fitHeight : BoxFit.fitWidth,
+                                        },
+                                        fadeInCurve: Curves.easeOutQuint,
+                                        fadeInDuration: const Duration(milliseconds: 600),
+                                        fadeOutCurve: Curves.easeInQuint,
+                                        fadeOutDuration: const Duration(milliseconds: 600),
+                                        imageErrorBuilder: ((context, error, stackTrace) {
+                                          return Image.asset(
+                                              'assets/NotImagestandard_large.jpg');
+                                        }),
+                                        placeholder: const AssetImage(
+                                            'assets/NotImagestandard_large.jpg'),
+                                        image: NetworkImage(
+                                          idImage!.endsWith("not_available")
+                                              ? '$idImage/portrait_uncanny.jpg'
+                                              : '$idImage/portrait_uncanny.jpg',
+                                        ),
+                                        fit: typ == 1 ? BoxFit.fitHeight : BoxFit.fitWidth,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -195,15 +194,11 @@ class Sliver extends StatelessWidget {
                             Column(
                               children: [
                                 space(context, typ == 1 ? 0.022 : 0.011),
-                                Container(
-                                  
-                                  width: screenSize(
-                                      context, 'width', 0.53),
-                                      // context, 'height', typ == 1 ? 0.128 : 0.182),
+                                SizedBox(
+                                  width: screenSize(context, 'width', 0.53),
                                   height: screenSize(
                                       context, 'height', typ == 1 ? 0.138 : 0.083),
                                   child: ListView.builder(
-                                    
                                       physics: const ScrollPhysics(
                                           parent: BouncingScrollPhysics()),
                                       controller: PageController(
@@ -214,28 +209,24 @@ class Sliver extends StatelessWidget {
                                       itemBuilder: (BuildContext context, int index) {
                                         return StreamBuilder(builder: (context, snapshot) {
                                           return Column(
-                                            children: [                                              
-                                              styleFont(context, name, typ == 1 ? 5: 7),
+                                            children: [
+                                              styleFont(context, name, typ == 1 ? 5 : 7),
                                               space(context, typ == 1 ? 0.011 : 0.001),
-                                              // styleFont(context, author, typ == 1 ? 7 : 9),
                                               space(context, typ == 1 ? 0.011 : 0.0),
-                                              // styleFont(
-                                              //     context, publishYear, typ == 1 ? 7 : 9),
                                               space(context, 0.011),
                                               typ == 1
                                                   ? Container(
-                                                    margin: EdgeInsets.only(left: screenSize(
-                                      context, 'width',  0.08)),
-                                                      decoration:  const BoxDecoration(
-                                                              gradient: LinearGradient(
-                                                                  colors: [
-                                                                  Colors.black12,
-                                                                  Colors.transparent
-                                                                ],
-                                                                  stops: [
-                                                                  0.6,
-                                                                  0.96
-                                                                ])) ,
+                                                      margin: EdgeInsets.only(
+                                                          left: screenSize(
+                                                              context, 'width', 0.08)),
+                                                      decoration: const BoxDecoration(
+                                                          gradient: LinearGradient(colors: [
+                                                        Colors.black12,
+                                                        Colors.transparent
+                                                      ], stops: [
+                                                        0.6,
+                                                        0.96
+                                                      ])),
                                                       child:
                                                           styleFont(context, descript, 9))
                                                   : Container(),
@@ -249,10 +240,9 @@ class Sliver extends StatelessWidget {
                             )
                           ],
                         ),
-                        Row(                      
-                          children:[                             
-                            Expanded(child: Container()),                            
-                            ClipRRect(
+                        Row(children: [
+                          Expanded(child: Container()),
+                          ClipRRect(
                             borderRadius: BorderRadius.all(
                                 Radius.circular(screenSize(context, 'height', 0.05))),
                             child: StreamBuilder<String?>(
@@ -288,8 +278,8 @@ class Sliver extends StatelessWidget {
                                               color: Colors.pinkAccent.withOpacity(0.74),
                                             ));
                                 }),
-                          ),]
-                        )
+                          ),
+                        ])
                       ],
                     ),
                   ),
@@ -300,8 +290,5 @@ class Sliver extends StatelessWidget {
           // }),
           ),
     );
-
-
   }
-  
 }

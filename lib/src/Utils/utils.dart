@@ -1,11 +1,15 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
+// Function that calculates the size of the screen based on the height or width
+
 screenSize(context, String his, double hisvar) {
-  final _screenSize = MediaQuery.of(context).size;
-  final sHeight = (_screenSize.width > _screenSize.height)
-      ? (_screenSize.height * hisvar) * 2.4
-      : (_screenSize.height * hisvar);
-  final sWidth = _screenSize.width * hisvar;
+  final screenSize = MediaQuery.of(context).size;
+  final sHeight = (screenSize.width > screenSize.height)
+      ? (screenSize.height * hisvar) * 2.4
+      : (screenSize.height * hisvar);
+  final sWidth = screenSize.width * hisvar;
   if (his == 'height') {
     return sHeight;
   } else if (his == 'width') {
@@ -13,6 +17,7 @@ screenSize(context, String his, double hisvar) {
   } else {}
 }
 
+// Widget that returns a vertical empty space with a given size
 Widget space(context, double hisvar) {
   return (SizedBox(
     height: screenSize(context, 'height', hisvar),
@@ -25,7 +30,7 @@ isnumeric(dynamic data) {
   return (n == null) ? false : true;
 }
 
-
+// Widget that returns a text with a certain style
 Widget styleFont(BuildContext context, String title, int hierarchy) {
   return Text(title,
       textAlign: hierarchy == 1
@@ -65,7 +70,7 @@ Widget styleFont(BuildContext context, String title, int hierarchy) {
                                         : FontStyle.normal,
         shadows: [
           Shadow(
-            color: Color.fromARGB(164, 0, 0, 0),
+            color: const Color.fromARGB(164, 0, 0, 0),
             blurRadius: hierarchy == 1
                 ? 20
                 : hierarchy == 2
@@ -123,11 +128,11 @@ Widget styleFont(BuildContext context, String title, int hierarchy) {
                 : hierarchy == 3
                     ? Colors.white
                     : hierarchy == 4
-                        ? Color.fromARGB(255, 255, 255, 255)
+                        ? const Color.fromARGB(255, 255, 255, 255)
                         : hierarchy == 5
-                            ? Color.fromARGB(245, 255, 255, 255)
+                            ? const Color.fromARGB(245, 255, 255, 255)
                             : hierarchy == 6
-                                ? Color.fromARGB(255, 255, 236, 192)
+                                ? const Color.fromARGB(255, 255, 236, 192)
                                 : hierarchy == 7
                                     ? Colors.white
                                     : hierarchy == 8
@@ -151,4 +156,10 @@ Widget styleFont(BuildContext context, String title, int hierarchy) {
                                         ? screenSize(context, 'width', 0.035)
                                         : screenSize(context, 'width', 0.029),
       ));
+}
+
+
+int ramdomNumber(int limitMax) {
+  var random = Random();
+  return random.nextInt(limitMax);
 }

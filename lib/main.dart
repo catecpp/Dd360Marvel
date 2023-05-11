@@ -26,6 +26,50 @@ class Preload extends StatelessWidget  {
     marvelProvider.dataMarvelProvider = model;  
     return marvelProvider.dataMarvelProvider == null ?
      const NoResponseView() :
-     const ListSuperHeroMarvelPage();
+     const AnimationPrelogin();
   }
 }
+
+
+class AnimationPrelogin extends StatefulWidget {
+  const AnimationPrelogin({Key? key}) : super(key: key);
+
+  @override
+  State<AnimationPrelogin> createState() => _AnimationPreloginState();
+}
+
+class _AnimationPreloginState extends State<AnimationPrelogin>
+    with SingleTickerProviderStateMixin {
+  late AnimationController animation;
+  late Animation<double> animationscale;
+
+  @override
+  void initState() {
+    animation = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 2000))
+      ..forward().whenComplete(() => Navigator.push(context,
+          MaterialPageRoute(builder: (BuildContext context) => const ListSuperHeroMarvelPage())));
+    animationscale = Tween<double>(begin: 0.5, end: 0.8).animate(animation);
+    animation.addListener(() => setState(() {}));
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    animation.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
+          child: Transform.scale(
+              scale: animationscale.value,
+              child: Image.asset("assets/marvel.jpeg"))),
+    );
+  }
+}
+
+

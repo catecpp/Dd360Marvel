@@ -7,9 +7,10 @@ import '../ViewModel/viewModel.dart';
 class NoResponseView extends StatelessWidget {
   const NoResponseView({super.key});
 
+// this is a widget that asks to check your network connection
+
   @override
   Widget build(BuildContext context) {
-
     final height = screenSize(context, "height", 1);
     final width = screenSize(context, "width", 1);
     return  Scaffold(
@@ -20,8 +21,7 @@ class NoResponseView extends StatelessWidget {
           maxLines: 3,
           style: TextStyle(
             color: Colors.amber,
-            fontSize: width * 0.05,
-             
+            fontSize: width * 0.05,             
           ),
           )),
     );

@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ffi';
+import 'dart:math';
 
 
 import 'package:dd360_test/src/Model/model.dart';
@@ -19,6 +21,7 @@ class ViewModel with ChangeNotifier {
 
   final publicKey = '5c28ff77e7908458a8255f977f3c9a95';
   final apiUrl = 'http://gateway.marvel.com/v1/public/characters';
+  // final apiUrl = 'http://gateway.marvel.com/v1/public/characters?offset=';
   final apiUrlImage = 'http://gateway.marvel.com/v1/public/Image';
   String timeStamp = DateTime.now().millisecondsSinceEpoch.toString();
 
@@ -40,37 +43,46 @@ class ViewModel with ChangeNotifier {
 
   // This make the call to API and validate the response
   Future<MarvelModel?> getResponse() async {
+    final numberRAmdom = ramdomNumber();
     final hash = md5hash();
     final queryParams = 'ts=$timeStamp&apikey=$publicKey&hash=$hash';
     final url = '$apiUrl?$queryParams';
+    // final url = '$apiUrl$numberRAmdom&$queryParams';
 
     final Uri urlConsult = Uri.parse(url);
     final http.Response resp = await http.get(urlConsult);
 
     if (resp.statusCode == 200){
+    print("object");
       final MarvelModel data = MarvelModel.fromJson(json.decode(resp.body));
       return data;
     }else {
       return null;
     }
   }
+
+int ramdomNumber() {
+  var random = Random();
+  return random.nextInt(1541);
+}
+
 
   
-  Future<MarvelModel?> getResponseImage() async {
-    final hash = md5hash();
-    final queryParams = 'ts=$timeStamp&apikey=$publicKey&hash=$hash';
-    final url = '$apiUrlImage?$queryParams';
+  // Future<MarvelModel?> getResponseImage() async {
+  //   final hash = md5hash();
+  //   final queryParams = 'ts=$timeStamp&apikey=$publicKey&hash=$hash';
+  //   final url = '$apiUrlImage?$queryParams';
 
-    final Uri urlConsult = Uri.parse(url);
-    final http.Response resp = await http.get(urlConsult);
+  //   final Uri urlConsult = Uri.parse(url);
+  //   final http.Response resp = await http.get(urlConsult);
 
-    if (resp.statusCode == 200){
-      final MarvelModel data = MarvelModel.fromJson(json.decode(resp.body));
-      return data;
-    }else {
-      return null;
-    }
-  }
+  //   if (resp.statusCode == 200){
+  //     final MarvelModel data = MarvelModel.fromJson(json.decode(resp.body));
+  //     return data;
+  //   }else {
+  //     return null;
+  //   }
+  // }
   
 
   // MarvelModel? _dataMarvelProvider ;
@@ -87,14 +99,22 @@ class ViewModel with ChangeNotifier {
 
 class DataMarvelProvider extends ChangeNotifier {
 
-  final model = ViewModel().getResponse();
 
 MarvelModel? _dataMarvelProvider ;
-
   MarvelModel? get dataMarvelProvider => _dataMarvelProvider;
-
   set dataMarvelProvider(MarvelModel? model) {
     _dataMarvelProvider = model;
+  }
+
+
+  // Get and Set of switch for active the view of lists in Heros´s details
+int _isViewOfListActive = 0 ;
+
+  int get isViewOfListActive => _isViewOfListActive;
+
+  set isViewOfListActive(int value) {
+    notifyListeners();
+    _isViewOfListActive = value;
   }
 
 }

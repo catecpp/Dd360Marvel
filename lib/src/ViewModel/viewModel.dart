@@ -10,8 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ViewModel {
-
-
   //  The final privateKey in this case should is in other file, probably with a crypto method. However in this case is fine here.
   final privateKey = 'aea39f754aa53c3207e7455a033367ae10045c8d';
 
@@ -24,7 +22,6 @@ class ViewModel {
   // This is a message for 'no response'
   final noResponse = "Please check your network connection";
 
-  // late var dataMarvelProvider = DataMarvelProvider().dataMarvelProvider;
 
   //   This is the method that return the hash
   String md5hash() {
@@ -39,7 +36,7 @@ class ViewModel {
     final numberRAmdom = ramdomNumber(1500);
     final hash = md5hash();
     final queryParams = 'ts=$timeStamp&apikey=$publicKey&hash=$hash';
-    final url = '$apiUrl?$queryParams';
+    final url = '$apiUrl?offset=$numberRAmdom&$queryParams';
 
     final Uri urlConsult = Uri.parse(url);
     final http.Response resp = await http.get(urlConsult);
@@ -81,8 +78,10 @@ class DataMarvelProvider extends ChangeNotifier {
   }
 }
 
+// This class is to demonstrate knowledge about BLOC
 class TitleProvider extends ChangeNotifier {
-  bool _cargando = false;
+  bool cargando = false;
+  // circulate a boolean through the stream
 
   final _buttonchangeStreamController = StreamController<String?>.broadcast();
   Function(String?) get buttonchangeSink => _buttonchangeStreamController.sink.add;

@@ -47,9 +47,9 @@ Widget styleFont(BuildContext context, String title, int hierarchy) {
                               ? TextAlign.left
                               : hierarchy == 7
                                   ? TextAlign.left
-                                : hierarchy == 8
-                                    ? TextAlign.center
-                                    : TextAlign.left,
+                                  : hierarchy == 8
+                                      ? TextAlign.center
+                                      : TextAlign.left,
       style: TextStyle(
         fontStyle: hierarchy == 1
             ? FontStyle.normal
@@ -157,7 +157,6 @@ Widget styleFont(BuildContext context, String title, int hierarchy) {
                                         : screenSize(context, 'width', 0.029),
       ));
 }
-
 
 int ramdomNumber(int limitMax) {
   var random = Random();

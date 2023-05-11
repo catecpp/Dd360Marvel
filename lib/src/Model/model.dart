@@ -1,5 +1,5 @@
-  
-  class MarvelModel {
+// In this file is the model to consume the requested api
+class MarvelModel {
   int code;
   String status;
   String copyright;
@@ -59,8 +59,7 @@ class Data {
         limit: json["limit"],
         total: json["total"],
         count: json["count"],
-        results:
-            List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
+        results: List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -144,8 +143,7 @@ class Comics {
   factory Comics.fromJson(Map<String, dynamic> json) => Comics(
         available: json["available"],
         collectionUri: json["collectionURI"],
-        items: List<ComicsItem>.from(
-            json["items"].map((x) => ComicsItem.fromJson(x))),
+        items: List<ComicsItem>.from(json["items"].map((x) => ComicsItem.fromJson(x))),
         returned: json["returned"],
       );
 
@@ -193,8 +191,7 @@ class Stories {
   factory Stories.fromJson(Map<String, dynamic> json) => Stories(
         available: json["available"],
         collectionUri: json["collectionURI"],
-        items: List<StoriesItem>.from(
-            json["items"].map((x) => StoriesItem.fromJson(x))),
+        items: List<StoriesItem>.from(json["items"].map((x) => StoriesItem.fromJson(x))),
         returned: json["returned"],
       );
 

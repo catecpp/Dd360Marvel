@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../Model/model.dart';
 import '../../Utils/utils.dart';
@@ -134,26 +133,23 @@ class DetailOfTitle extends StatelessWidget {
                           children: [
                             SizedBox(
                               width: height * 0.33,
-                              child: Hero(
-                                tag: idImage!,
-                                child: FadeInImage(
-                                  placeholderErrorBuilder: (context, error, stackTrace) {
-                                    return Container();
-                                  },
-                                  fadeInCurve: Curves.easeOutQuint,
-                                  fadeInDuration: const Duration(milliseconds: 600),
-                                  fadeOutCurve: Curves.easeInQuint,
-                                  fadeOutDuration: const Duration(milliseconds: 600),
-                                  imageErrorBuilder: ((context, error, stackTrace) {
-                                    return Image.asset('assets/NotImagestandard_large.jpg');
-                                  }),
-                                  placeholder:
-                                      const AssetImage('assets/NotImagestandard_large.jpg'),
-                                  image: NetworkImage(
-                                    '$idImage/portrait_uncanny.jpg',
-                                  ),
-                                  fit: BoxFit.cover,
+                              child: FadeInImage(
+                                placeholderErrorBuilder: (context, error, stackTrace) {
+                                  return Container();
+                                },
+                                fadeInCurve: Curves.easeOutQuint,
+                                fadeInDuration: const Duration(milliseconds: 600),
+                                fadeOutCurve: Curves.easeInQuint,
+                                fadeOutDuration: const Duration(milliseconds: 600),
+                                imageErrorBuilder: ((context, error, stackTrace) {
+                                  return Image.asset('assets/NotImagestandard_large.jpg');
+                                }),
+                                placeholder:
+                                    const AssetImage('assets/NotImagestandard_large.jpg'),
+                                image: NetworkImage(
+                                  '$idImage/portrait_uncanny.jpg',
                                 ),
+                                fit: BoxFit.cover,
                               ),
                             ),
                             space(context, 0.02),

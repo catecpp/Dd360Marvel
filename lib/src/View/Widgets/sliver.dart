@@ -40,7 +40,6 @@ class Sliver extends StatelessWidget {
             context: context,
             builder: (context) {
               return
-                  //  Container();
                   DetailOfTitle(
                 idImage: idImage,
                 title: name,
@@ -153,35 +152,32 @@ class Sliver extends StatelessWidget {
                                   child: SizedBox(
                                     width: screenSize(
                                         context, 'height', typ == 1 ? 0.104 : 0.056),
-                                    child: Hero(
-                                      tag: idImage!,
-                                      child: FadeInImage(
-                                        placeholderErrorBuilder:
-                                            (context, error, stackTrace) {
-                                          if ((error == HttpException) ||
-                                              (error == IOException) ||
-                                              stackTrace == StackTrace.empty) {
-                                            return Container();
-                                          }
+                                    child: FadeInImage(
+                                      placeholderErrorBuilder:
+                                          (context, error, stackTrace) {
+                                        if ((error == HttpException) ||
+                                            (error == IOException) ||
+                                            stackTrace == StackTrace.empty) {
                                           return Container();
-                                        },
-                                        fadeInCurve: Curves.easeOutQuint,
-                                        fadeInDuration: const Duration(milliseconds: 600),
-                                        fadeOutCurve: Curves.easeInQuint,
-                                        fadeOutDuration: const Duration(milliseconds: 600),
-                                        imageErrorBuilder: ((context, error, stackTrace) {
-                                          return Image.asset(
-                                              'assets/NotImagestandard_large.jpg');
-                                        }),
-                                        placeholder: const AssetImage(
-                                            'assets/NotImagestandard_large.jpg'),
-                                        image: NetworkImage(
-                                          idImage!.endsWith("not_available")
-                                              ? '$idImage/portrait_uncanny.jpg'
-                                              : '$idImage/portrait_uncanny.jpg',
-                                        ),
-                                        fit: typ == 1 ? BoxFit.fitHeight : BoxFit.fitWidth,
+                                        }
+                                        return Container();
+                                      },
+                                      fadeInCurve: Curves.easeOutQuint,
+                                      fadeInDuration: const Duration(milliseconds: 600),
+                                      fadeOutCurve: Curves.easeInQuint,
+                                      fadeOutDuration: const Duration(milliseconds: 600),
+                                      imageErrorBuilder: ((context, error, stackTrace) {
+                                        return Image.asset(
+                                            'assets/NotImagestandard_large.jpg');
+                                      }),
+                                      placeholder: const AssetImage(
+                                          'assets/NotImagestandard_large.jpg'),
+                                      image: NetworkImage(
+                                        idImage!.endsWith("not_available")
+                                            ? '$idImage/portrait_uncanny.jpg'
+                                            : '$idImage/portrait_uncanny.jpg',
                                       ),
+                                      fit: typ == 1 ? BoxFit.fitHeight : BoxFit.fitWidth,
                                     ),
                                   ),
                                 ),

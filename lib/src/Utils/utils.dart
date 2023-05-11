@@ -13,7 +13,7 @@ screenSize(context, String his, double hisvar) {
   } else {}
 }
 
-space(context, double hisvar) {
+Widget space(context, double hisvar) {
   return (SizedBox(
     height: screenSize(context, 'height', hisvar),
   ));

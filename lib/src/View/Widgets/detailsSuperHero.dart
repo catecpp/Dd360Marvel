@@ -12,6 +12,7 @@ class DetailOfTitle extends StatelessWidget {
   final List<ComicsItem> comics;
   final List<ComicsItem> events;
   final List<ComicsItem> series;
+  final List<StoriesItem> stories;
   final typ;
 
   const DetailOfTitle(
@@ -22,6 +23,7 @@ class DetailOfTitle extends StatelessWidget {
       required this.comics,
       required this.events,
       required this.series,
+      required this.stories,
       required this.typ})
       : super(key: key);
 
@@ -147,13 +149,14 @@ class DetailOfTitle extends StatelessWidget {
                                         fadeOutCurve: Curves.easeInQuint,
                                         fadeOutDuration: Duration(milliseconds: 600),
                                         imageErrorBuilder: ((context, error, stackTrace) {
-                                          return Image.asset('assets/NotImagestandard_large.jpg');
+                                          return Image.asset(
+                                              'assets/NotImagestandard_large.jpg');
                                         }),
-                                        placeholder: 
-                                            const AssetImage('assets/NotImagestandard_large.jpg'),
-                                        image:NetworkImage(
-                                         '$idImage' + '/portrait_uncanny.jpg',
-                                         ) ,
+                                        placeholder: const AssetImage(
+                                            'assets/NotImagestandard_large.jpg'),
+                                        image: NetworkImage(
+                                          '$idImage' + '/portrait_uncanny.jpg',
+                                        ),
                                         fit: BoxFit.cover,
                                       ),
                                     ),
@@ -164,12 +167,12 @@ class DetailOfTitle extends StatelessWidget {
                                         physics: const ScrollPhysics(
                                             parent: BouncingScrollPhysics()),
                                         controller: PageController(
-                                          initialPage: -2,
+                                          initialPage: -4,
                                           viewportFraction: 0.47,
                                         ),
                                         itemCount: 1,
                                         itemBuilder: (BuildContext context, int index) {
-                                        return StreamBuilder(
+                                          return StreamBuilder(
                                               builder: (context, snapshot) {
                                             return Column(
                                               children: [
@@ -177,92 +180,11 @@ class DetailOfTitle extends StatelessWidget {
                                                 space(context, 0.01),
                                                 styleFont(
                                                     context, descript, typ == 1 ? 8 : 9),
-                                                space(context, 0.015),
-                                                styleFont(
-                                                    context, "Comics ", typ == 1 ? 5 : 9),
-                                                space(context,  0.003),
-                                                Padding(
-                                                  padding:  EdgeInsets.symmetric(horizontal: screenSize(context, "width", 0.0911)),
-                                                  child: ListView.builder(
-                                                    physics: NeverScrollableScrollPhysics(),
-                                                    shrinkWrap: true,
-                                                  itemCount: comics.length,
-                                                  itemBuilder: (BuildContext context, int index) {
-                                                     return  Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        space(context,  0.011),
-                                                        styleFont(context, comics[index].name, typ == 1 ? 7 : 9),
-                                                      ],
-                                                    );
-                                                  },),
-                                                ),
-                                                space(context, 0.051),
-                                                 styleFont(
-                                                    context, "Events ", typ == 1 ? 5 : 9),
-                                                space(context, 0.005),
-                                                Container(
-                                                        decoration: const BoxDecoration(
-                                                                gradient: LinearGradient(
-                                                                    colors: [
-                                                                    Colors.transparent,
-                                                                    Colors.black54
-                                                                  ],
-                                                                    stops: [
-                                                                    0.6,
-                                                                    0.96
-                                                                  ])),             
-                                                        child:
-                                                        Padding(
-                                                  padding:  EdgeInsets.symmetric(horizontal: screenSize(context, "width", 0.11)),
-                                                  child: ListView.builder(
-                                                    physics: NeverScrollableScrollPhysics(),
-                                                    shrinkWrap: true,
-                                                  itemCount: events.length,
-                                                  itemBuilder: (BuildContext context, int index) {
-                                                   return  Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        space(context,  0.011),
-                                                        styleFont(context, events[index].name, typ == 1 ? 7 : 9),
-                                                      ],
-                                                    );
-                                                  },),
-                                                ),
-                                                ),
-                                                space(context, 0.051),
-                                                 styleFont(
-                                                    context, "Series ", typ == 1 ? 5 : 9),
-                                                space(context, 0.005),
-                                                Container(
-                                                        decoration: const BoxDecoration(
-                                                                gradient: LinearGradient(
-                                                                    colors: [
-                                                                    Colors.transparent,
-                                                                    Colors.black87
-                                                                  ],
-                                                                    stops: [
-                                                                    0.6,
-                                                                    0.96
-                                                                  ])),             
-                                                        child:
-                                                        Padding(
-                                                  padding:  EdgeInsets.symmetric(horizontal: screenSize(context, "width", 0.11)),
-                                                  child: ListView.builder(
-                                                    physics: NeverScrollableScrollPhysics(),
-                                                    shrinkWrap: true,
-                                                  itemCount: series.length,
-                                                  itemBuilder: (BuildContext context, int index) {
-                                                   return  Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        space(context,  0.011),
-                                                        styleFont(context, series[index].name, typ == 1 ? 7 : 9),
-                                                      ],
-                                                    );
-                                                  },),
-                                                ),
-                                                ),
+                                                space(context, 0.015),                                               
+                                                setWitgetof(context, comics, "Comics"),
+                                                setWitgetof(context, events, "Events"),
+                                                setWitgetof(context, series, "Series"),
+                                                setWitgetof(context, stories, "Stories"),
                                                 space(context, typ == 1 ? 0.011 : 0.001),
                                               ],
                                             );
@@ -287,5 +209,39 @@ class DetailOfTitle extends StatelessWidget {
           // }),
           ),
     );
+  }
+
+  Widget setWitgetof(BuildContext context, List type, String title) {
+    return Column(
+       
+      children: [
+      space(context, 0.051),
+      styleFont(context, title, typ == 1 ? 5 : 9),
+      space(context, 0.005),
+      Container(
+        margin: EdgeInsets.only(right: screenSize(context, "width", 0.083)),
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+                colors: [Colors.transparent, Color.fromARGB(137, 28, 0, 55)], stops: [0.1, 0.96])),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: screenSize(context, "width", 0.11)),
+          child: !type.isEmpty ? ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: type.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  space(context, 0.011),
+                  styleFont(context, type[index].name, typ == 1 ? 7 : 9),
+                  const Divider(thickness: 1,)
+                ],
+              );
+            },
+          ):  styleFont(context, "      - No $title", typ == 1 ? 7 : 9),
+        ),
+      ),
+    ]);
   }
 }

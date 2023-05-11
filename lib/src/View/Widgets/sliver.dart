@@ -16,6 +16,7 @@ class Sliver extends StatelessWidget {
     final List<ComicsItem> events;
     final String descript;
     final List<ComicsItem> series;
+    final List<StoriesItem>stories;
     final int typ;
   const Sliver({
     super.key, 
@@ -25,12 +26,12 @@ class Sliver extends StatelessWidget {
      required this.events, 
     required this.descript, 
     required this.series, 
-    required this.typ
+    required this.typ, required this.stories
     });
 
   @override
   Widget build(BuildContext context) {
-
+  final TitleProvider titleFront = TitleProvider();
     return GestureDetector(
       onTap: () {
         print(comics);
@@ -46,6 +47,7 @@ class Sliver extends StatelessWidget {
                 comics: comics,
                 events: events,
                 series: series,
+                stories: stories,
                 typ: typ,
               );
             });
@@ -115,7 +117,7 @@ class Sliver extends StatelessWidget {
                                       ],
                                       begin: Alignment.topLeft,
                                       end: Alignment(0.65, 1.5),
-                                      stops: [0.47, 1.5])
+                                      stops: [0.47, 1.5])     
                                   : idImage?[0] == '9'
                                       ? const LinearGradient(
                                           colors: [
@@ -194,17 +196,19 @@ class Sliver extends StatelessWidget {
                               children: [
                                 space(context, typ == 1 ? 0.022 : 0.011),
                                 Container(
+                                  
                                   width: screenSize(
                                       context, 'width', 0.53),
                                       // context, 'height', typ == 1 ? 0.128 : 0.182),
                                   height: screenSize(
                                       context, 'height', typ == 1 ? 0.138 : 0.083),
                                   child: ListView.builder(
+                                    
                                       physics: const ScrollPhysics(
                                           parent: BouncingScrollPhysics()),
                                       controller: PageController(
                                         initialPage: typ == 1 ? -2 : -1,
-                                        viewportFraction: typ == 1 ? 1.1 : 1.5,
+                                        viewportFraction: typ == 1 ? 0.9 : 1.5,
                                       ),
                                       itemCount: 1,
                                       itemBuilder: (BuildContext context, int index) {
@@ -220,8 +224,9 @@ class Sliver extends StatelessWidget {
                                               space(context, 0.011),
                                               typ == 1
                                                   ? Container(
-                                                      decoration: descript != '-'
-                                                          ? const BoxDecoration(
+                                                    margin: EdgeInsets.only(left: screenSize(
+                                      context, 'width',  0.08)),
+                                                      decoration:  const BoxDecoration(
                                                               gradient: LinearGradient(
                                                                   colors: [
                                                                   Colors.black12,
@@ -230,8 +235,7 @@ class Sliver extends StatelessWidget {
                                                                   stops: [
                                                                   0.6,
                                                                   0.96
-                                                                ]))
-                                                          : const BoxDecoration(),
+                                                                ])) ,
                                                       child:
                                                           styleFont(context, descript, 9))
                                                   : Container(),
@@ -245,47 +249,47 @@ class Sliver extends StatelessWidget {
                             )
                           ],
                         ),
-                        // Positioned(
-                        //   left: screenSize(context, 'width', 0.42),
-                        //   top: screenSize(context, 'width', 0.29),
-                        //   child: ClipRRect(
-                        //     borderRadius: BorderRadius.all(
-                        //         Radius.circular(screenSize(context, 'height', 0.05))),
-                        //     child: StreamBuilder<String?>(
-                        //         stream: titleFront.buttonchangeStream,
-                        //         builder: (context, snapshot) {
-                        //           return IconButton(
-                        //               onPressed: (() {
-                        //                 final colorbott =
-                        //                     snapshot.data == 'grey' ? 'green' : 'grey';
-                        //                 titleFront.buttonchangeSink(colorbott);
-                        //               }),
-                        //               icon: snapshot.hasData
-                        //                   ? snapshot.data == 'grey'
-                        //                       ? Icon(Icons.check_circle_outlined,
-                        //                           size: 35,
-                        //                           shadows: const [
-                        //                             Shadow(
-                        //                               color:
-                        //                                   Color.fromARGB(109, 23, 23, 23),
-                        //                               blurRadius: 10,
-                        //                             )
-                        //                           ],
-                        //                           color: Colors.lightGreenAccent.shade100)
-                        //                       : Icon(
-                        //                           Icons.add_circle_outlined,
-                        //                           size: 29,
-                        //                           color: Color.fromARGB(255, 234, 21, 92)
-                        //                               .withOpacity(0.74),
-                        //                         )
-                        //                   : Icon(
-                        //                       Icons.add_circle_outlined,
-                        //                       size: 29,
-                        //                       color: Colors.pinkAccent.withOpacity(0.74),
-                        //                     ));
-                        //         }),
-                        //   ),
-                        // )
+                        Row(                      
+                          children:[                             
+                            Expanded(child: Container()),                            
+                            ClipRRect(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(screenSize(context, 'height', 0.05))),
+                            child: StreamBuilder<String?>(
+                                stream: titleFront.buttonchangeStream,
+                                builder: (context, snapshot) {
+                                  return IconButton(
+                                      onPressed: (() {
+                                        final colorbott =
+                                            snapshot.data == 'grey' ? 'green' : 'grey';
+                                        titleFront.buttonchangeSink(colorbott);
+                                      }),
+                                      icon: snapshot.hasData
+                                          ? snapshot.data == 'grey'
+                                              ? Icon(Icons.check_circle_outlined,
+                                                  size: 35,
+                                                  shadows: const [
+                                                    Shadow(
+                                                      color:
+                                                          Color.fromARGB(109, 23, 23, 23),
+                                                      blurRadius: 10,
+                                                    )
+                                                  ],
+                                                  color: Colors.lightGreenAccent.shade100)
+                                              : Icon(
+                                                  Icons.add_circle_outlined,
+                                                  size: 29,
+                                                  color: Color.fromARGB(255, 234, 21, 92)
+                                                      .withOpacity(0.74),
+                                                )
+                                          : Icon(
+                                              Icons.add_circle_outlined,
+                                              size: 29,
+                                              color: Colors.pinkAccent.withOpacity(0.74),
+                                            ));
+                                }),
+                          ),]
+                        )
                       ],
                     ),
                   ),

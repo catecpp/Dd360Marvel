@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 
@@ -97,3 +98,14 @@ MarvelModel? _dataMarvelProvider ;
   }
 
 }
+
+class TitleProvider extends ChangeNotifier {
+  bool _cargando = false;
+
+
+final _buttonchangeStreamController = StreamController<String?>.broadcast();
+  Function(String?) get buttonchangeSink => _buttonchangeStreamController.sink.add;
+  Stream<String?> get buttonchangeStream => _buttonchangeStreamController.stream;
+  void buttonchangedisposeStream() {
+    _buttonchangeStreamController.close();
+  }}

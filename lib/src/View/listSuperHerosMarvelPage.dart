@@ -48,7 +48,7 @@ class ListSuperHeroMarvelPage extends StatelessWidget {
             //   decoration: BoxDecoration(color: Colors.red),
             // );
             // return Sliver(name: "hola", descript: "hola", tipy: 1, typ: 1);
-            return Sliver(idImage: listDocs[index].thumbnail.path, name: listDocs[index].name, descript: listDocs[index].description, tipy: 2, typ: 1);
+            return Sliver(idImage: listDocs[index].thumbnail.path, name: listDocs[index].name, descript: listDocs[index].description, series: listDocs[index].series.items , typ: 1, comics: listDocs[index].comics.items, events: listDocs[index].events.items,);
             // ;
           },
         ),

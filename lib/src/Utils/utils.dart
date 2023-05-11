@@ -43,7 +43,7 @@ Widget styleFont(BuildContext context, String title, int hierarchy) {
                               : hierarchy == 7
                                   ? TextAlign.left
                                 : hierarchy == 8
-                                    ? TextAlign.left
+                                    ? TextAlign.center
                                     : TextAlign.left,
       style: TextStyle(
         fontStyle: hierarchy == 1
@@ -148,7 +148,7 @@ Widget styleFont(BuildContext context, String title, int hierarchy) {
                                 : hierarchy == 7
                                     ? screenSize(context, 'width', 0.035)
                                     : hierarchy == 8
-                                        ? screenSize(context, 'width', 0.038)
+                                        ? screenSize(context, 'width', 0.035)
                                         : screenSize(context, 'width', 0.029),
       ));
 }

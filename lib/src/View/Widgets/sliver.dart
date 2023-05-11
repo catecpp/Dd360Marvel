@@ -7,63 +7,47 @@ import 'package:flutter/material.dart';
 import '../../Model/model.dart';
 import '../../Utils/utils.dart';
 import '../../ViewModel/viewModel.dart';
+import 'detailsSuperHero.dart';
 
 class Sliver extends StatelessWidget {
     final String? idImage;
     final String name;
-    // final String author;
-    // final String publishYear;
+    final List<ComicsItem> comics;
+    final List<ComicsItem> events;
     final String descript;
-    final int tipy;
+    final List<ComicsItem> series;
     final int typ;
   const Sliver({
     super.key, 
     this.idImage,
     required this.name, 
-    // required this.author,
-    //  required this.publishYear, 
+    required this.comics,
+     required this.events, 
     required this.descript, 
-    required this.tipy, 
+    required this.series, 
     required this.typ
     });
 
   @override
   Widget build(BuildContext context) {
-    // final viewModel = ViewModel();
-    //     final height = screenSize(context, "height", 1);
-    // final width = screenSize(context, "width", 1);
-    
 
-  //     Future<MarvelModel?> getResponseImage() async {
-  //   final hash = viewModel.md5hash();
-  //   final queryParams = 'ts=$viewModel.timeStamp&apikey=$viewModel.publicKey&hash=$viewModel.hash';
-  //   final url = '$viewModel.apiUrl?$queryParams';
-
-  //   final Uri urlConsult = Uri.parse(url);
-  //   final http.Response resp = await http.get(urlConsult);
-
-  //   if (resp.statusCode == 200){
-  //     final MarvelModel data = MarvelModel.fromJson(json.decode(resp.body));
-  //     return data;
-  //   }else {
-  //     return null;
-  //   }
-  // }
     return GestureDetector(
       onTap: () {
+        print(comics);
         showDialog(
             context: context,
             builder: (context) {
-              return Container();
-              // DetailOfTitle(
-              //   idImage: idImage,
-              //   title: title,
-              //   author: author,
-              //   publishYear: publishYear,
-              //   descript: descript,
-              //   tipy: tipy,
-              //   typ: typ,
-              // );
+              return
+              //  Container();
+              DetailOfTitle(
+                idImage: idImage,
+                title: name,
+                descript: descript,
+                comics: comics,
+                events: events,
+                series: series,
+                typ: typ,
+              );
             });
       },
       child: Container(
@@ -144,7 +128,8 @@ class Sliver extends StatelessWidget {
                                       : const LinearGradient(
                                           colors: [
                                             Color.fromARGB(255, 104, 0, 239),
-                                            Color.fromARGB(255, 200, 129, 247),
+                                            Color.fromARGB(255, 23, 0, 39),
+                                            // Color.fromARGB(255, 200, 129, 247),
                                           ],
                                           begin: Alignment.topLeft,
                                           end: Alignment(0.65, 1.5),
@@ -190,8 +175,9 @@ class Sliver extends StatelessWidget {
                                         return Image.asset('assets/NotImagestandard_large.jpg');
                                       }),
                                       placeholder: const AssetImage('assets/NotImagestandard_large.jpg'),
-                                      image:  NetworkImage(
-                                         '$idImage' + '/portrait_large.jpg',
+                                      image:  NetworkImage(idImage!.endsWith("not_available") ?
+                                         '$idImage' + '/portrait_xlarge.jpg':
+                                         '$idImage' + '/portrait_fantastic.jpg',
                                          ) ,
                                           // 'https://covers.openlibrary.org/b/id/$idImage-L.jpg'),
                                       fit: typ == 1 ? BoxFit.fitHeight : BoxFit.fitWidth,
@@ -224,7 +210,7 @@ class Sliver extends StatelessWidget {
                                       itemBuilder: (BuildContext context, int index) {
                                         return StreamBuilder(builder: (context, snapshot) {
                                           return Column(
-                                            children: [
+                                            children: [                                              
                                               styleFont(context, name, typ == 1 ? 5: 7),
                                               space(context, typ == 1 ? 0.011 : 0.001),
                                               // styleFont(context, author, typ == 1 ? 7 : 9),

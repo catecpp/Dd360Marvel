@@ -206,7 +206,7 @@ class Stories {
 class StoriesItem {
   String resourceUri;
   String name;
-  Type type;
+  Type? type;
 
   StoriesItem({
     required this.resourceUri,
@@ -217,7 +217,7 @@ class StoriesItem {
   factory StoriesItem.fromJson(Map<String, dynamic> json) => StoriesItem(
         resourceUri: json["resourceURI"],
         name: json["name"],
-        type: typeValues.map[json["type"]]!,
+        type: typeValues.map[json["type"]],
       );
 
   Map<String, dynamic> toJson() => {
